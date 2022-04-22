@@ -1,0 +1,21 @@
+<% provide(:title, "Login") %>
+<h1 class="header-login">MANAGEMENT</h1>
+
+<div class="content-login">
+    <%= form_with url: login_path do |form| %>
+        <div class="mg-top-small">
+            <%= form.label :mailInput, "Email", class: "form-label font-weight-bold font-size-label" %>
+            <%= form.text_field :mailInput, placeholder: "Please enter Email", class: "form-control style-input" %>
+            <div class="error-box" id="error-box-login" style="height: 2.5rem"></div>
+        </div>
+        <div class="mg-top-small">
+            <%= form.label :passwordInput, "Password", class: "form-label font-weight-bold font-size-label" %>
+            <%= form.text_field :passwordInput, placeholder: "Please enter Password", class: "form-control style-input", type: "password" %>
+            <div class="error-box" id="error-box-sign-up" style="height: 2.5rem"></div>
+        </div>
+        <div class="display-flex">
+            <input class="btn btn-login" value="Login" readonly="readonly">
+            <a href="javascript:void(0)" class="btn btn-sign-up">Sign up</a>
+        </div>
+    <% end %>
+</div>
