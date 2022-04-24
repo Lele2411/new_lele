@@ -2,7 +2,7 @@
 <h1 class="header-login">MANAGEMENT</h1>
 
 <div class="content-login">
-    <%= form_with url: login_path do |form| %>
+    <%= form_with url: login_path, local: true do |form| %>
         <div class="mg-top-small">
             <%= form.label :mailInput, "Email", class: "form-label font-weight-bold font-size-label" %>
             <%= form.text_field :mailInput, placeholder: "Please enter Email", class: "form-control style-input" %>
@@ -18,5 +18,9 @@
             <a href="javascript:void(0)" class="btn btn-sign-up">Sign up</a>
         </div>
     <% end %>
-    
+    <div class="flash-danger failed-login">
+        <% flash.each do |type, msg| %>
+            <div><%= msg %></div>
+        <% end %>
+    </div>
 </div>
