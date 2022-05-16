@@ -1,4 +1,118 @@
 <% provide(:title, "Company Managemant") %>
 
-<div class="header-company">
+<% content_for :head do %>
+    <%= javascript_pack_tag 'companies/index', 'data-turbolinks-track': 'reload' %>
+<% end %>
+
+<div class="wrapper">
+    <div class="main-wrapper row">
+        <div class="col-lg-12 col-sm-12 title-main"><div class="m-0 header-title">Company Management</div></div>
+        <%= search_form_for @q, class:"col-lg-12 col-sm-12", id:"company-management-frm" do |f| %>
+            <table id="table-company-frm" class="table col-lg-5 col-sm-5 mt-4 font-weight-bold">
+                <tr>
+                    <td><%= f.label :company, 'Company' %></td>
+                    <td></td>
+                    <td>
+                        <div class="row form-group">
+                        <div class="col-sm-4">
+                            <%= f.search_field :company_code_cont, class:"form-control", placeholder: "Company code" %>
+                        </div>
+                        <div class="col-sm-8">
+                            <%= f.search_field :company_name_cont, class:"form-control", placeholder: "Please enter company name" %>
+                        </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><%= f.label :company_email_cont, 'Email' %><td>
+                    <td>
+                        <div class="row form-group">
+                            <div class="col-sm-8"><%= f.search_field :company_email_cont, class:"form-control", placeholder: "Please enter company email" %></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><%= f.label :phone_number_cont, 'Phone Number' %><td>
+                    <td>
+                        <div class="row form-group">
+                            <div class="col-sm-8"><%= f.search_field :phone_number_cont, class:"form-control", placeholder: "Please enter phone number" %></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><%= f.label :status_eq, 'Status' %><td>
+                    <td>
+                        <div class="row form-group">
+                            <div class="col-sm-8"><%= f.select :status_eq, [["Working", 2], ["Pending", 1], ["Stopped", 0]], { :include_blank => 'Select status' }, { :class => "form-select", :id => "select-status" } %></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <hr>
+            <div class="col-lg-12 col-sm-12 d-flex justify-content-end align-items-center my-4">
+                <ul class="nav group-btn">
+                    <li class="nav-item"><%= link_to "Register", new_company_path, class: "btn btn-register" %></li>
+                    <li class="nav-item"><%= f.submit "Search", class:"btn btn-primary" %></li>
+                    <li class="nav-item"><a class="btn btn-dark" href>Back</a></li>
+                </ul>
+            </div>
+        <% end %>
+        <% if @companies.empty? %>
+            <div><h3 class="empty-data">There are no companies</h3></div>
+        <% else %>
+            <div class="col-lg-12 col-sm-12">
+                <div class="table-company">
+                    <table id="table-company-content" class="table">
+                        <thead>
+                            <tr>
+                                <th width="15%" class="col-content" scope="col">Code</th>
+                                <th width="20%" class="col-content" scope="col">Company name</th>
+                                <th width="20%" class="col-content" scope="col">Email</th>
+                                <th width="15%" class="col-content" scope="col">Phone number</th>
+                                <th width="15%" class="col-content" scope="col">Status</th>
+                                <th width="15%" class="col-content" scope="col"></th>
+                            </tr>
+                        </thead>
+                    <tbody>
+                        <% @companies.each do |company| %>
+                            <tr>
+                                <td class="col-content"><%= company.company_code %></th>
+                                <td class="col-content"><%= company.company_name %></td>
+                                <td class="col-content"><%= company.company_email %></td>
+                                <td class="col-content"><%= company.phone_number %></td>
+                                <td class="col-content"><span class="btn btn-dark btn-status-<%= company.status == 2 ? 'working' : (company.status == 1 ? 'pending' : 'stop') %>">
+                                    <%= company.status == 2 ? 'Working' : (company.status == 1 ? 'Pending' : 'Stopped') %></span>
+                                </td>
+                                <td class="col-content">
+                                    <%= link_to "Detail", company, class: "btn btn-dark btn-detail" %>
+                                    <%= link_to "Delete", company, class: "btn btn-dark btn-remove", method: :delete, data: { confirm: "Are you sure?", disable_with: "Processing..." } %>
+                                </td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="paginator d-flex align-items-center justify-content-between">
+                <%= form_with url: select_pagination_path, id: "select-pagination", class: "d-flex align-items-center", method: :post do |f| %>
+                    <%= f.label :option_row_of_per_page, 'Row per page', class: "font-weight-bold font-size-12" %>
+                    <%= f.select :option_row_of_per_page, [[5, 5], [10, 10], [20, 20]], { :selected => @per_page }, { :class => "form-select" } %>
+                    <%= f.hidden_field :company_code_param, value: @params ? @params[:company_code_cont] : '' %>
+                    <%= f.hidden_field :company_name_param, value: @params ? @params[:company_name_cont] : '' %>
+                    <%= f.hidden_field :company_email_param, value: @params ? @params[:company_email_cont] : '' %>
+                    <%= f.hidden_field :phone_number_param, value: @params ? @params[:phone_number_cont] : '' %>
+                    <%= f.hidden_field :status_param, value: @params ? @params[:status_eq] : '' %>
+                <% end %>
+                <div class="total-page d-flex align-items-center justify-content-between">
+                    <% total = @companies.count %>
+                    <% first_number = (@current_page - 1) * @per_page + 1 %>
+                    <% final_number = @current_page <= total/@per_page ? @current_page * @per_page : total %>
+                    <span class="mr-3 font-weight-bold font-size-12"><%= first_number %>-<%= final_number %> of <%= total %></span>
+                    <%= will_paginate @companies, :previous_label => 'Previous', :next_label => 'Next'%>
+                </div>
+            </div>
+
+        <% end %>
+    </div>
 </div>

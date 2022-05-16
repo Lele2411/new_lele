@@ -1,26 +1,47 @@
-$(document).ready(function(){
+$(function() {
+    var emailInput = document.getElementById("session_mailInput");
+    emailInput.addEventListener('input', function() {
+        if (emailInput.value.length > 256) {
+            var error_limit_email = document.getElementById("error-limit");
+            if (!error_limit_email) {
+                appendElement($('#error-box-email'), "<div class='error-text' id='error-limit'>Email max length is 256!</div>")
+            }
+        } else {
+            $('.error-text').remove();
+        }
+    })
+
+    emailInput.addEventListener('keypress', function(event) {
+        if (emailInput.value.length > 256) {
+            event.preventDefault();
+        }
+    });
+
     $(".btn-login").click(function(){
-        var email = $('#session_mailInput').val();
+        console.log(emailInput.value);
         var password = $('#session_passwordInput').val();
-        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        var mailformat = /^[\w+\-.]{2,}@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+$/i;
         var check_validate = true;
         $('.error-text').remove();
         $('.failed-login').remove();
-        if (email == "") {
-            appendElement($('#error-box-login'), "<div class='error-text' id='error-empty-email'>Email is required!</div>")
+        if (emailInput.value == "") {
+            appendElement($('#error-box-email'), "<div class='error-text' id='error-empty-email'>Email is required!</div>")
             check_validate = false;
         } else {
-            if (email.length > 256) {
-                appendElement($('#error-box-login'), "<div class='error-text' id='error-limit'>Length Max is 256!</div>")
+            if (emailInput.value.length > 256) {
+                appendElement($('#error-box-email'), "<div class='error-text' id='error-limit'>Email max length is 256!</div>")
                 check_validate = false;
             }
-            if (!email.match(mailformat)) {
-                appendElement($('#error-box-login'), "<div class='error-text' id='error-format'>Email is format!</div>")
+            if (!emailInput.value.match(mailformat)) {
+                appendElement($('#error-box-email'), "<div class='error-text' id='error-format'>Email must be correct format!</div>")
                 check_validate = false;
             }
         }
         if (password == '') {
-            appendElement($('#error-box-sign-up'), "<div class='error-text' id='error-empty-password'>Password is required!</div>")
+            appendElement($('#error-box-password'), "<div class='error-text' id='error-empty-password'>Password is required!</div>")
+            check_validate = false;
+        } else if (password.length > 256) {
+            appendElement($('#error-box-password'), "<div class='error-text' id='error-limit-password'>Password max length is 256!</div>")
             check_validate = false;
         }
         if (check_validate) {
@@ -32,3 +53,4 @@ $(document).ready(function(){
     }
 });
 
+import 'packs/application'

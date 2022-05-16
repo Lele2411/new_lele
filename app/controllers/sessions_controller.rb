@@ -9,15 +9,18 @@ class SessionsController < ApplicationController
         user = User.find_by(email: params[:session][:mailInput])
         if user && user.authenticate(params[:session][:passwordInput])
             log_in user
-            max_role = user_max_role(user)
-            if max_role && max_role[:role] === 3
+            max_role = user_max_role
+            if max_role && max_role[:value] === Company::ROLES[:role_admin]
                 #case admin
+                redirect_to companies_path
             end
-            if max_role && max_role[:role] === 2
+            if max_role && max_role[:value] === Company::ROLES[:role_company_admin]
                 #case company_admin
+                render html: 'case company_admin'
             end
-            if max_role && max_role[:role] == 1
+            if max_role && max_role[:value] === Company::ROLES[:role_user]
                 #case user
+                render html: 'case user'
             end
         else
             flash.now[:login_failed] = "Account Invalid!<br>Please check your email and password!".html_safe
@@ -26,6 +29,13 @@ class SessionsController < ApplicationController
     else
         render 'new'
     end
+  end
+
+  def destroy
+    if current_user
+        session.delete(:user_id)
+    end
+        redirect_to login_path
   end
 
   private

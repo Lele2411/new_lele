@@ -1,0 +1,12 @@
+<% content_for :head do %>
+    <%= javascript_pack_tag 'companies/show', 'data-turbolinks-track': 'reload' %>
+<% end %>
+
+<div class="wrapper">
+  <div class="main-wrapper row">
+    <div class="col-lg-12 col-sm-12 title-main">
+      <div class="m-0 header-title">Company Detail</div>
+    </div>
+    <%= render 'form', :company => @company %>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= yield(:title) %></title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <%= yield(:head) %>
+    <%= stylesheet_link_tag 'company', media: 'all', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= render 'layouts/companies/header' %>
+    <%= yield %>
+    <% if request.path === companies_path && request.method === "GET" %>
+        <%= render 'layouts/companies/index_js' %>
+    <% end %>
+    <script>
+        function showPreview(event){
+            if(event.target.files.length > 0){
+                var src = URL.createObjectURL(event.target.files[0]);
+                var preview = document.getElementById("preview-image");
+                preview.src = src;
+            }
+        }
+    </script>
+  </body>
+</html>

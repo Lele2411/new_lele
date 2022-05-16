@@ -1,4 +1,9 @@
 <% provide(:title, "Login") %>
+<% content_for :head do %>
+    <%= stylesheet_link_tag 'login', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'login', 'data-turbolinks-track': 'reload' %>
+<% end %>
+
 <h1 class="header-login">MANAGEMENT</h1>
 
 <div class="content-login">
@@ -6,7 +11,7 @@
         <div class="mg-top-small">
             <%= form.label :mailInput, "Email", class: "form-label font-weight-bold font-size-label" %>
             <%= form.text_field :mailInput, placeholder: "Please enter Email", class: "form-control style-input", value: params[:session] ? params[:session][:mailInput] : '' %>
-            <div class="error-box" id="error-box-login" style="height: 2.5rem">
+            <div class="error-box" id="error-box-email" style="height: 2.5rem">
                 <%= flash[:empty_email] || '' %>
                 <%= flash[:limit_email] || '' %>
                 <%= flash[:format_email] || '' %>
@@ -15,7 +20,7 @@
         <div class="mg-top-small">
             <%= form.label :passwordInput, "Password", class: "form-label font-weight-bold font-size-label" %>
             <%= form.text_field :passwordInput, placeholder: "Please enter Password", class: "form-control style-input", type: "password", value: params[:session] ? params[:session][:passwordInput] : '' %>
-            <div class="error-box" id="error-box-sign-up" style="height: 2.5rem">
+            <div class="error-box" id="error-box-password" style="height: 2.5rem">
                 <%= flash[:empty_password] || '' %>
             </div>
         </div>

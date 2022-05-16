@@ -1,0 +1,39 @@
+<ul class="nav group-btn ">
+<!-- Button trigger modal -->
+    <li class="nav-item">
+        <button type="button" class="btn btn-primary btn-update-status btn-status-working" data-bs-toggle="modal" data-bs-target="#updateStatusModal" value="2">
+            Working
+        </button>
+    </li>
+    <li class="nav-item">
+        <button type="button" class="btn btn-primary btn-update-status btn-status-pending" data-bs-toggle="modal" data-bs-target="#updateStatusModal" value="1">
+            Pending
+        </button>
+    </li>
+    <li class="nav-item">
+        <button type="button" class="btn btn-primary btn-update-status btn-remove" data-bs-toggle="modal" data-bs-target="#updateStatusModal" value="0">
+            Stop
+        </button>
+    </li>
+</ul>
+
+<!-- Modal -->
+<div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="width: 360px">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="width: 360px; height: 180px">
+            <div class="modal-body" style="display: flex; padding: 2.5rem 1rem 0 2rem">
+                <span style="padding-right: 1rem"><em class="fa-regular fa-circle-question"></em></span>
+                <div>
+                    <div>Do you want to</div>
+                    <div>change status these company?</div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: space-between; border-top: hidden">
+                <button type="button" class="btn btn-register" id="btn-update-status">OK</button>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

@@ -10,7 +10,6 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
  *= require_self
  */
 * {
@@ -43,6 +42,13 @@
 .flash-danger {
     color: red;
     font-size: 12px;
+}
+.font-size-12 {
+    font-size: 12px;
+}
+.header-title {
+    font-size: 20px !important;
+    font-weight: bold !important;
 }
 
  @import 'bootstrap/scss/bootstrap';

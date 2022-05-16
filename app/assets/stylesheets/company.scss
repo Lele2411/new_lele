@@ -1,0 +1,275 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: #edf0f0;
+  box-shadow: 1px 4px 8px 0 rgba(0, 0, 0, 0.4);
+  transition: 0.3s;
+  padding: 0px 2rem;
+}
+
+header .logo {
+  font-size: 2rem;
+  font-weight: 400;
+}
+.nav-menu-header {
+  display: flex;
+  align-items: center;
+  margin: 0px;
+  list-style: none;
+}
+.nav-menu-header .avatar {
+  border-radius: 50%;
+}
+.nav-menu-header > li > a {
+  color: gray;
+  font-size: 1.1rem;
+}
+.wrapper .main-wrapper {
+  width: 95%;
+  margin: 2.5% auto;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 90px #00000029;
+  border: 0.5px solid #c8c8c8;
+  border-radius: 6px;
+  opacity: 1;
+}
+
+.wrapper .main-wrapper .title-main {
+  padding: 0.8rem 1.2rem;
+  background-color: #72acff;
+  display: flex;
+  font-weight: 400;
+  align-items: center;
+  border-radius: 6px;
+}
+#company-management-frm hr {
+  border-top: 1px solid black;
+  opacity: 1;
+}
+
+#company-management-frm hr {
+  border-top: 1px solid black;
+  opacity: 1;
+}
+
+#company-management-frm #table-company-frm {
+  width: 700px;
+  td {
+    border-top: none !important;
+    label {
+      font-size: 1rem;
+    }
+  }
+}
+#table-company-frm {
+    .error-text {
+        padding: 0 !important;
+    }
+}
+
+.register-company-error {
+    padding: 0 34px !important;
+    font-weight: normal;
+}
+
+#error-logo {
+    margin-top: 25px;
+    margin-left: 6rem;
+}
+
+input, button, a.btn, span.btn {
+  width: 120px;
+  border-radius: 10px !important;
+  margin-left: 10px !important;
+}
+.table-company {
+  height: 400px;
+  width: 98%;
+  margin: auto;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  box-shadow: 0px 3px 90px #00000029;
+  border: 0.5px solid #c8c8c8;
+  border-radius: 6px;
+  opacity: 1;
+  overflow: scroll;
+}
+#table-company-content th {
+  background-color: #72acff;
+  padding: 1.5rem;
+}
+#table-company-content .col-content {
+  box-shadow: 0px 3px 90px #00000029;
+  border: 0.5px solid #c8c8c8;
+  opacity: 1;
+  vertical-align: middle;
+  .btn {
+    width: 100px;
+  }
+}
+
+#table-company-content .col-content, .nav-item {
+    .btn-status-stop {
+        background: #92929d 0% 0% no-repeat padding-box;
+        border: 1px solid #92929d;
+    }
+    .btn-status-working {
+        background: #11aa0c 0% 0% no-repeat padding-box;
+        border: 1px solid #11aa0c;
+    }
+    .btn-status-pending {
+        background: #e9cb03 0% 0% no-repeat padding-box;
+        border: 1px solid #e9cb03;
+    }
+    .btn-detail {
+        background: #30c0f0 0% 0% no-repeat padding-box;
+        border: 1px solid #30c0f0;
+    }
+    .btn-remove {
+        background: #d31212 0% 0% no-repeat padding-box;
+        border: 1px solid #d31212;
+    }
+}
+
+#select-status {
+  margin-left: 10px;
+  > option:nth-child(1) {
+    color: gray;
+  }
+  > option:nth-child(2) {
+    color: #11aa0c;
+  }
+  > option:nth-child(3) {
+    color: #e9cb03;
+  }
+  > option:nth-child(4) {
+    color: #92929d;
+  }
+}
+
+.working-color {
+    color: #11aa0c;
+}
+.pending-color {
+    color: #e9cb03;
+}
+.stopped-color {
+    color: #92929d;
+}
+
+
+.empty-data {
+  text-align: center;
+  width: 500px;
+  margin: auto;
+  color: red;
+  margin-bottom: 100px;
+}
+
+.pagination-custom nav {
+    display: flex;
+    justify-content: right;
+}
+
+.btn-register {
+    color: white !important;
+    background-color: #18C090 !important;
+    border-color: #18C090 !important;
+}
+
+.form-wrapper {
+    padding: 0px 2.5rem !important;
+    margin: auto;
+    border-bottom: 1px solid #000;
+}
+.upload-logo {
+    tr {
+        vertical-align: top;
+        td {
+            width: 325px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-left: 5rem;
+            label {
+                font-size: 1.1rem;
+            }
+        }
+    }
+    .logo-img {
+        width: 112px;
+        height: 112px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #eee;
+    }
+    .btn-upload {
+        label {
+            cursor: pointer;
+            position: relative;
+            background-color: #0058FF;
+            padding: 5px 10px;
+            color: #fff;
+            border-radius: 5px;
+            i {
+                color: #000;
+                margin-right: 5px;
+                padding: 0px;
+            }
+        }
+        input {
+            display: none;
+            position: absolute;
+        }
+    }
+}
+
+.paginator {
+    width: 98%;
+    margin: 1rem auto;
+    padding: 0 29.203px 0 29.203px !important;
+    nav {
+        margin-left: 35px;
+    }
+    label {
+        width: 110px;
+    }
+    select {
+        width: 55%
+    }
+}
+
+.pagination {
+    margin-bottom: 0 !important;
+}
+
+table {
+    tr {
+        border-style: hidden;
+    }
+    td {
+        vertical-align: middle;
+    }
+    input, select {
+        border: 2px solid #72acff !important;
+        border-radius: 10px !important;
+    }
+}
+
+#company-register-frm {
+    padding: 0 50px;
+}
+
+.fa-camera {
+    color: black;
+}
+.disable-input {
+    background-color: white !important;
+    color: gray !important;
+}
+
+@import "application";

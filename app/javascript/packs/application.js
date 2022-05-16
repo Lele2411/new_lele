@@ -8,7 +8,8 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
-import 'bootstrap';
+import 'bootstrap'
+import "@fortawesome/fontawesome-free/css/all"
 
 
 
@@ -18,5 +19,3 @@ import 'bootstrap';
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-
-require("packs/login")

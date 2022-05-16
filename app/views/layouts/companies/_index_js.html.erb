@@ -1,0 +1,22 @@
+<script>
+    var selectElement = document.getElementById("select-status");
+    setColorForSelectEle(selectElement);
+    selectElement.addEventListener('change', function(){
+        setColorForSelectEle(selectElement);
+    });
+    function setColorForSelectEle(element) {
+        if (element.value == '') {
+            element.style.color = 'gray';
+        } else if (element.value == '2') {
+            element.style.color = '#11AA0C'
+        } else if (element.value == '1') {
+            element.style.color = '#E9CB03';
+        } else {
+            element.style.color = '#92929D';
+        }
+    }
+    var selectPagination = document.getElementById("option_row_of_per_page");
+    selectPagination.addEventListener('change', function(){
+        document.getElementById("select-pagination").submit();
+    });
+</script>
