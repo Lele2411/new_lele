@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+    before_action :after_logged_in, only: :new
 
   def new
   end
@@ -29,6 +30,9 @@ class SessionsController < ApplicationController
     else
         render 'new'
     end
+  end
+
+  def index
   end
 
   def destroy

@@ -50,4 +50,10 @@ module SessionsHelper
         !current_user.nil?
     end
 
+    def after_logged_in
+        if logged_in?
+            redirect_to "/"
+        end
+    end
+
 end

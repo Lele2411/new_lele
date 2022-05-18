@@ -8,16 +8,22 @@
     <li class="nav-item">
       <a class="nav-link" href="#">ABOUT</a>
     </li>
-    <li class="nav-item dropdown">
-      <a class="nav-link" href="#" id="navbarDropdownHeader" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <img class="avatar" src="https://review.siu.edu.vn/Upload/Siu52/emma-watson-1.jpg" alt="" width="50px" height="50px"/>
-      </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdownHeader">
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <div class="dropdown-divider"></div>
-        <%= link_to "Log out", logout_path, class: "dropdown-item", method: :delete %>
-      </div>
-    </li>
+    <% if logged_in? %>
+        <li class="nav-item dropdown">
+        <a class="nav-link" href="#" id="navbarDropdownHeader" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img class="avatar" src="https://review.siu.edu.vn/Upload/Siu52/emma-watson-1.jpg" alt="" width="50px" height="50px"/>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownHeader">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <%= link_to "Log out", logout_path, class: "dropdown-item", method: :delete %>
+        </div>
+        </li>
+    <% else %>
+        <li class="nav-item">
+            <%= link_to "Log in", login_path %>
+        </li>
+    <% end %>
   </ul>
 </header>
