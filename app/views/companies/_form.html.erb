@@ -67,17 +67,19 @@
                     <% end %>
                 </td>
             </tr>
+
+<%= f.fields_for :company_profiles do |profile| %>
             <% if create_company_page %>
                 <tr>
                     <td>
-                        <%= f.label :company_name do %>
+                        <%= profile.label :company_name do %>
                             Company Name<span class="text-danger"> *</span>
                         <% end %>
                     </td>
                     <td>
                         <div class="row form-group">
                             <div class="col-sm-8">
-                                <%= f.text_field :company_name, class: "form-control", placeholder:"Please enter Company name" %>
+                                <%= profile.text_field :company_name, class: "form-control", placeholder:"Please enter Company name" %>
                             </div>
                         </div>
                     </td>
@@ -93,14 +95,14 @@
             <% end %>
             <tr>
                 <td>
-                    <%= f.label :address do %>
+                    <%= profile.label :address do %>
                         Address<span class="text-danger"> *</span>
                     <% end %>
                 </td>
                 <td>
                     <div class="row form-group">
                         <div class="col-sm-12">
-                            <%= f.text_field :address, class: "form-control", placeholder:"Please enter Address" %>
+                            <%= profile.text_field :address, class: "form-control", placeholder:"Please enter Address" %>
                         </div>
                     </div>
                 </td>
@@ -115,14 +117,14 @@
             </tr>
             <tr>
                 <td>
-                    <%= f.label :company_email do %>
+                    <%= profile.label :company_email do %>
                         Email<span class="text-danger"> *</span>
                     <% end %>
                 </td>
                 <td>
                     <div class="row form-group">
                         <div class="col-sm-8">
-                            <%= f.text_field :company_email, class: "form-control", placeholder:"Please enter Email" %>
+                            <%= profile.text_field :company_email, class: "form-control", placeholder:"Please enter Email" %>
                         </div>
                     </div>
                 </td>
@@ -137,14 +139,14 @@
             </tr>
             <tr>
                 <td>
-                    <%= f.label :phone_number do %>
+                    <%= profile.label :phone_number do %>
                         Phone number<span class="text-danger"> *</span>
                     <% end %>
                 </td>
                 <td>
                     <div class="row form-group">
                         <div class="col-sm-8">
-                            <%= f.text_field :phone_number, class: "form-control", placeholder:"Please enter Phone number" %>
+                            <%= profile.text_field :phone_number, class: "form-control", placeholder:"Please enter Phone number" %>
                         </div>
                     </div>
                 </td>
@@ -159,12 +161,12 @@
             </tr>
             <tr>
                 <td>
-                    <%= f.label :website_url, 'Website' %>
+                    <%= profile.label :website_url, 'Website' %>
                 </td>
                 <td>
                     <div class="row form-group">
                         <div class="col-sm-8">
-                            <%= f.text_field :website_url, class: "form-control", placeholder:"Please enter Website" %>
+                            <%= profile.text_field :website_url, class: "form-control", placeholder:"Please enter Website" %>
                         </div>
                     </div>
                 </td>
@@ -194,21 +196,21 @@
                 </tr>
             <% end %>
         </table>
-            <table class="col-lg-6 col-sm-6 upload-logo font-weight-bold">
+        <table class="col-lg-6 col-sm-6 upload-logo font-weight-bold">
             <tr height="114px">
                 <td>
                     <div>
-                        <%= f.label :logo do %>
+                        <%= profile.label :logo do %>
                             Logo<span class="text-danger"> *</span>
                         <% end %>
                     </div>
                     <% logo = @company.logo.blank? ? 'logo' : @company.logo.url %>
                     <%= image_tag(logo, alt: "preview image", class: "d-block logo-img", id: "preview-image") %>
                     <div class="btn btn-upload">
-                        <%= f.label :logo do %>
+                        <%= profile.label :logo do %>
                             <em class="fa fa-camera"></em> upload
                         <% end %>
-                        <%= f.file_field :logo, onchange: "showPreview(event);" %>
+                        <%= profile.file_field :logo, onchange: "showPreview(event);" %>
                     </div>
                 </td>
                 <td class="register-company-error error-text" id="error-logo">
@@ -224,6 +226,7 @@
                 </td>
             </tr>
         </table>
+<% end %>
     </div>
 
     <div class="col-lg-12 col-sm-12 d-flex justify-content-<%= create_company_page ? 'end' : 'between' %> align-items-center my-4">

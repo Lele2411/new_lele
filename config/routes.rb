@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
-  resources :companies
+  resources :companies do
+    resources :company_profiles
+  end
   post '/select-pagination', to: "pagination#create"
 end

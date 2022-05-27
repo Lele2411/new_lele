@@ -10,19 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_09_042855) do
+ActiveRecord::Schema.define(version: 2022_05_27_033353) do
 
   create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "company_code", null: false
-    t.text "company_name", null: false
-    t.text "company_email", null: false
+  end
+
+  create_table "company_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
+    t.string "company_code", null: false
+    t.string "company_name", null: false
+    t.string "company_email", null: false
     t.string "phone_number", null: false
     t.integer "status", default: 2
-    t.text "website_url"
-    t.text "address", null: false
+    t.string "website_url"
+    t.string "address", null: false
+    t.integer "display_flag", default: 0
+    t.datetime "display_time", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.text "logo", null: false
+    t.bigint "company_id", null: false
+    t.string "logo", null: false
+    t.index ["company_id"], name: "index_company_profiles_on_company_id"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
@@ -44,6 +52,7 @@ ActiveRecord::Schema.define(version: 2022_05_09_042855) do
     t.string "password_digest"
   end
 
+  add_foreign_key "company_profiles", "companies"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
 end

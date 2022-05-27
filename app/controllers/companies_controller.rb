@@ -12,7 +12,7 @@ class CompaniesController < ApplicationController
         @q = Company.ransack(@params)
         @current_page = (params[:page] || 1).to_i
         @per_page = (session[:perpage] || 5).to_i
-        @companies = @q.result.order_by_created_at.paginate(page: params[:page], per_page: @per_page)
+        @companies = @q.result.includes(:company_profiles).where(company_profiles: { display_flag: CompanyProfile::FLAG_ON }).paginate(page: params[:page], per_page: @per_page)
     end
 
     def show
@@ -26,7 +26,6 @@ class CompaniesController < ApplicationController
         if @company.save
             redirect_to companies_path
         else
-            # byebug
             render 'new'
         end
     end

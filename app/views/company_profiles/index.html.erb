@@ -1,0 +1,42 @@
+<div class="wrapper">
+    <div class="main-wrapper row">
+        <div class="col-lg-12 col-sm-12 title-main"><div class="m-0 header-title">Company Profiles Management</div></div>
+        <%= render 'form', :profile => @profile, :company => @company %>
+        <% if @profiles.empty? %>
+            <div><h3 class="empty-data">There are no profiles</h3></div>
+        <% else %>
+            <div class="col-lg-12 col-sm-12">
+                <div class="table-company">
+                    <table id="table-company-content" class="table">
+                        <thead>
+                            <tr>
+                                <th width="15%" class="col-content" scope="col">Code</th>
+                                <th width="15%" class="col-content" scope="col">Company name</th>
+                                <th width="15%" class="col-content" scope="col">Email</th>
+                                <th width="15%" class="col-content" scope="col">Phone number</th>
+                                <th width="15%" class="col-content" scope="col">Status</th>
+                                <th width="15%" class="col-content" scope="col">Display Flag</th>
+                                <th width="30%" class="col-content" scope="col">Display Time</th>
+                            </tr>
+                        </thead>
+                    <tbody>
+                        <% @profiles.each do |profile| %>
+                            <tr>
+                                <td class="col-content"><%= profile.company_code %></th>
+                                <td class="col-content"><%= profile.company_name %></td>
+                                <td class="col-content"><%= profile.company_email %></td>
+                                <td class="col-content"><%= profile.phone_number %></td>
+                                <td class="col-content"><span class="btn btn-dark btn-status-<%= profile.status == 2 ? 'working' : (profile.status == 1 ? 'pending' : 'stop') %>">
+                                    <%= profile.status == 2 ? 'Working' : (profile.status == 1 ? 'Pending' : 'Stopped') %></span>
+                                </td>
+                                <td class="col-content"><%= profile.display_flag %></td>
+                                <td class="col-content"><%= profile.display_time %></td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>

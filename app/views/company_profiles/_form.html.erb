@@ -1,0 +1,223 @@
+<% profile_name_error = nil %>
+<% address_error = nil %>
+<% profile_email_error = nil %>
+<% phone_number_error = nil %>
+<% website_url_error = nil %>
+<% logo_error = nil %>
+<% display_time_error = nil %>
+
+
+<% if @profile.errors.any? %>
+    <% @profile.errors.messages.each do |attribute, message| %>
+        <% if attribute == :company_name %>
+            <% profile_name_error = message[0] %>
+        <% elsif attribute == :address %>
+            <% address_error = message[0] %>
+        <% elsif attribute == :company_email %>
+            <% profile_email_error = message[0] %>
+        <% elsif attribute == :phone_number %>
+            <% phone_number_error = message[0] %>
+        <% elsif attribute == :website_url %>
+            <% website_url_error = message[0] %>
+        <% elsif attribute == :website_url %>
+            <% website_url_error = message[0] %>
+        <% elsif attribute == :logo %>
+            <% logo_error = message[-1] %>
+        <% elsif attribute == :display_time %>
+            <% display_time_error = message[-1] %>
+        <% end %>
+    <% end %>  
+<% end %>
+
+<%= form_for [@company, @profile], html: { class: "col-lg-12 col-sm-12", id: "company-register-frm" } do |f| %>
+    <div class="form-wrapper mt-4 register-company-error mr-0 d-flex">
+        <table id="table-company-frm" class="table col-lg-6 col-sm-6 font-weight-bold" style="width: 700px;">
+            <tr>
+                <td width="30%">
+                    <%= f.label :company_code do %>
+                        Company Code<span class="text-danger"> *</span>
+                    <% end %>
+                </td>
+                <td width="80%">
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <%= f.text_field :company_code, class: "form-control disable-input", readonly: "readonly", value: @company.company_code %>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%= f.label :company_name do %>
+                        Company Name<span class="text-danger"> *</span>
+                    <% end %>
+                </td>
+                <td>
+                    <div class="row form-group">
+                        <div class="col-sm-8">
+                            <%= f.text_field :company_name, class: "form-control", placeholder:"Please enter Company name" %>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="error-text" height="20px">
+                <td></td>
+                <td class="register-company-error">
+                    <% if profile_name_error %>
+                        <%= profile_name_error %>
+                    <% end %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%= f.label :address do %>
+                        Address<span class="text-danger"> *</span>
+                    <% end %>
+                </td>
+                <td>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <%= f.text_field :address, class: "form-control", placeholder:"Please enter Address" %>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="error-text" height="20px">
+                <td></td>
+                <td class="register-company-error">
+                    <% if address_error %>
+                        <%= address_error %>
+                    <% end %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%= f.label :company_email do %>
+                        Email<span class="text-danger"> *</span>
+                    <% end %>
+                </td>
+                <td>
+                    <div class="row form-group">
+                        <div class="col-sm-8">
+                            <%= f.text_field :company_email, class: "form-control", placeholder:"Please enter Email" %>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="error-text" height="20px">
+                <td></td>
+                <td class="register-company-error">
+                    <% if profile_email_error %>
+                        <%= profile_email_error %>
+                    <% end %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%= f.label :phone_number do %>
+                        Phone number<span class="text-danger"> *</span>
+                    <% end %>
+                </td>
+                <td>
+                    <div class="row form-group">
+                        <div class="col-sm-8">
+                            <%= f.text_field :phone_number, class: "form-control", placeholder:"Please enter Phone number" %>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="error-text" height="20px">
+                <td></td>
+                <td class="register-company-error" id="phone_number_error">
+                    <% if phone_number_error %>
+                            <div id="phone_number_error_detail"><%= phone_number_error %></div>
+                    <% end %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%= f.label :website_url, 'Website' %>
+                </td>
+                <td>
+                    <div class="row form-group">
+                        <div class="col-sm-8">
+                            <%= f.text_field :website_url, class: "form-control", placeholder:"Please enter Website" %>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="error-text" height="20px">
+                <td></td>
+                <td class="register-company-error">
+                    <% if website_url_error %>
+                        <%= website_url_error %>
+                    <% end %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%= f.label :display_time do %>
+                        Set Time To Display<span class="text-danger"> *</span>
+                    <% end %>
+                </td>
+                <td>
+                    <div class="row form-group">
+                        <div class="col-sm-8">
+                            <%= f.date_field :display_time, min: Time.now.strftime("%Y/%m/%d") %>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="error-text" height="20px">
+                <td></td>
+                <td class="register-company-error">
+                    <% if display_time_error %>
+                        <%= display_time_error %>
+                    <% end %>
+                </td>
+            </tr>
+        </table>
+
+        <table class="col-lg-6 col-sm-6 upload-logo font-weight-bold">
+            <tr height="114px">
+                <td>
+                    <div>
+                        <%= f.label :logo do %>
+                            Logo<span class="text-danger"> *</span>
+                        <% end %>
+                    </div>
+                    <% logo = @profile.logo.blank? ? 'logo' : @profile.logo.url %>
+                    <%= image_tag(logo, alt: "preview image", class: "d-block logo-img", id: "preview-image") %>
+                    <div class="btn btn-upload">
+                        <%= f.label :logo do %>
+                            <em class="fa fa-camera"></em> upload
+                        <% end %>
+                        <%= f.file_field :logo, onchange: "showPreview(event);" %>
+                    </div>
+                </td>
+                <td class="register-company-error error-text" id="error-logo">
+                    <% if logo_error %>
+                        <%= logo_error %>
+                    <% end %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" class="d-block" id="logo_image" name="upload" value="">
+                    <label id="error_image" generate="true" class="d-block error"></label>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-lg-12 col-sm-12 d-flex justify-content-end align-items-center my-4">
+        <ul class="nav group-btn">
+            <li class="nav-item">
+                <%= f.submit "Register", class: "btn btn-register" %>
+            </li>
+            <li class="nav-item">
+                <%= link_to "Back", @company, class: "btn btn-dark" %>
+            </li>
+        </ul>
+    </div>
+<% end %>

@@ -1,4 +1,5 @@
 class Company < ApplicationRecord
+    # before_save :set_display_flag_on_for_company
 
     ROLES = {
         :role_admin => 1,
@@ -6,7 +7,9 @@ class Company < ApplicationRecord
         :role_user => 3,
     }
 
-    scope :order_by_created_at, -> { order('created_at': 'DESC') }
+    has_many :company_profiles, dependent: :destroy
+
+    accepts_nested_attributes_for :company_profiles
 
     validates :company_code, presence: { message: "Company code must not be empty!" },
         length: { is: 6, message: "Company code must have 6 characters!" },
@@ -31,4 +34,9 @@ class Company < ApplicationRecord
     validates :logo, presence: { message: "Logo must not be empty!" }
 
     mount_uploader :logo, ImageUploader
+
+    # private
+    # def set_display_flag_on_for_company
+    #     self.display_flag = Company::FLAG_ON
+    # end
 end
