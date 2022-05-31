@@ -7,7 +7,97 @@
     <div class="col-lg-12 col-sm-12 title-main">
       <div class="m-0 header-title">Company Detail</div>
     </div>
-    <%= render 'form', :company => @company %>
+    <div class="form-wrapper mt-4 register-company-error mr-0 d-flex">
+        <table id="table-company-frm" class="table col-lg-6 col-sm-6 font-weight-bold" style="width: 700px;">
+            <tr>
+                <td width="30%">Company Code:</td>
+                <td width="80%">
+                    <div class="row form-group">
+                        <div class="col-sm-4"><%= @company.company_code %></div>
+                    </div>
+                </td>
+            </tr>
+<% if @applied_profile %>
+            <tr>
+                <td width="30%">Company Name:</td>
+                <td width="80%">
+                    <div class="row form-group">
+                        <div class="col-sm-4" style="width: 100%"><%= @applied_profile.company_name %></div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Address:</td>
+                <td>
+                    <div class="row form-group">
+                        <div class="col-sm-12"><%= @applied_profile.address %></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td>
+                    <div class="row form-group">
+                        <div class="col-sm-8"><%= @applied_profile.company_email %></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Phone number:</td>
+                <td>
+                    <div class="row form-group">
+                        <div class="col-sm-8"><%= @applied_profile.phone_number %></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Website:</td>
+                <td>
+                    <div class="row form-group">
+                        <div class="col-sm-8"><%= @applied_profile.website_url %></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Status:</td>
+                <td>
+                    <div class="row form-group" style="padding-left: 12px">
+                        <% if @applied_profile.status == 2 %>
+                            <div class="col-sm-8 working-color">WORKING</div>
+                        <% elsif @applied_applied_profilecompany.status == 1 %>
+                            <div class="col-sm-8 pending-color">PENDING</div>
+                        <% else %>
+                            <div class="col-sm-8 stopped-color">STOPPED</div>
+                        <% end %>
+                    </div>
+                </td>
+            </tr>
+<% end %>
+        </table>
+        <% if @applied_profile %>
+        <table class="col-lg-6 col-sm-6 upload-logo font-weight-bold">
+            <tr height="114px">
+                <td>
+                    <div>Logo:</div>
+                    <% logo = @applied_profile.logo.blank? ? 'logo' : @applied_profile.logo.url %>
+                    <%= image_tag(logo, alt: "preview image", class: "d-block logo-img", id: "preview-image") %>
+                </td>
+            </tr>
+        </table>
+        <% end %>
+    </div>
+    <div class="col-lg-12 col-sm-12 d-flex justify-content-between align-items-center my-4">
+        <ul class="nav group-btn">
+            <li class="nav-item">
+                <%= link_to "Company Profiles Management", company_company_profiles_path(@company) %>
+            </li>
+        </ul>
+        <ul class="nav group-btn">
+            <li class="nav-item">
+                <%= link_to "Back", companies_path, class: "btn btn-dark" %>
+            </li>
+        </ul>
+    </div>
   </div>
-  <%= link_to "Company Profiles Management", company_company_profiles_path(@company) %>
 </div>

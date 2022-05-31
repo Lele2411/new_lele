@@ -1,7 +1,7 @@
 class PaginationController < ApplicationController
 
     def create
-        select_pagination_options = ["5", "10", "20"]
+        select_pagination_options = ["20", "50", "100"]
         if select_pagination_options.include? params[:option_row_of_per_page]
             session[:perpage] = params[:option_row_of_per_page]
         end

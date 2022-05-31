@@ -1,0 +1,33 @@
+<% content_for :head do %>
+    <%= javascript_pack_tag 'company_profiles/show', 'data-turbolinks-track': 'reload' %>
+<% end %>
+
+<div class="wrapper">
+  <div class="main-wrapper row">
+    <div class="col-lg-12 col-sm-12 title-main">
+      <div class="m-0 header-title">Company Profile Detail</div>
+    </div>
+    <%= render 'form', :company => @company %>
+
+    <%= form_for [@company, @profile], html: { id: "form-update-status" } do |f| %>
+        <%= f.hidden_field :status, value: @profile.status, id: "company_status" %>
+    <% end %>
+
+    <button hidden data-bs-toggle="modal" data-bs-target="#updateSuccessModal" id="btn-update-success"></button>
+    <input type="hidden" value=<%= flash[:update_success] || false %> id="check-status-update">
+    <!-- Modal -->
+    <div class="modal fade" id="updateSuccessModal" tabindex="-1" aria-labelledby="updateSuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="width: 360px; height: 180px">
+                <div class="modal-body" style="display: flex; padding: 2.5rem 1rem 0 2rem">
+                    <em class='fas fa-check-circle' style='color: green; padding-right: 25px'></em>
+                    <span>Update Company Successfully!!!</span>
+                </div>
+                <div class="modal-footer" style="justify-content: center; border-top: hidden; padding-bottom: 2rem">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

@@ -6,6 +6,7 @@
 <% logo_error = nil %>
 <% display_time_error = nil %>
 
+<% create_profile_page = request.path === new_company_company_profile_path(@company) || request.path === company_company_profiles_path(@company) %>
 
 <% if @profile.errors.any? %>
     <% @profile.errors.messages.each do |attribute, message| %>
@@ -32,20 +33,6 @@
 <%= form_for [@company, @profile], html: { class: "col-lg-12 col-sm-12", id: "company-register-frm" } do |f| %>
     <div class="form-wrapper mt-4 register-company-error mr-0 d-flex">
         <table id="table-company-frm" class="table col-lg-6 col-sm-6 font-weight-bold" style="width: 700px;">
-            <tr>
-                <td width="30%">
-                    <%= f.label :company_code do %>
-                        Company Code<span class="text-danger"> *</span>
-                    <% end %>
-                </td>
-                <td width="80%">
-                    <div class="row form-group">
-                        <div class="col-sm-4">
-                            <%= f.text_field :company_code, class: "form-control disable-input", readonly: "readonly", value: @company.company_code %>
-                        </div>
-                    </div>
-                </td>
-            </tr>
             <tr>
                 <td>
                     <%= f.label :company_name do %>
@@ -176,6 +163,22 @@
                     <% end %>
                 </td>
             </tr>
+            <% unless create_profile_page %>
+                <tr>
+                    <td>Status:</td>
+                    <td>
+                        <div class="row form-group" style="padding-left: 12px">
+                            <% if @profile.status == 2 %>
+                                <div class="col-sm-8 working-color">WORKING</div>
+                            <% elsif @profile.status == 1 %>
+                                <div class="col-sm-8 pending-color">PENDING</div>
+                            <% else %>
+                                <div class="col-sm-8 stopped-color">STOPPED</div>
+                            <% end %>
+                        </div>
+                    </td>
+                </tr>
+            <% end %>
         </table>
 
         <table class="col-lg-6 col-sm-6 upload-logo font-weight-bold">
@@ -201,23 +204,43 @@
                     <% end %>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <input type="hidden" class="d-block" id="logo_image" name="upload" value="">
-                    <label id="error_image" generate="true" class="d-block error"></label>
-                </td>
-            </tr>
         </table>
     </div>
 
-    <div class="col-lg-12 col-sm-12 d-flex justify-content-end align-items-center my-4">
+    <div class="col-lg-12 col-sm-12 d-flex justify-content-<%= create_profile_page ? 'end' : 'between' %> align-items-center my-4">
+        <% unless create_profile_page %>
+            <%= render 'update_status_form', company: @company %>
+        <% end %>
         <ul class="nav group-btn">
             <li class="nav-item">
-                <%= f.submit "Register", class: "btn btn-register" %>
+                <% if create_profile_page %>
+                    <%= f.submit "Register", class: "btn btn-register" %>
+                <% else %>
+                    <input class="btn btn-primary" value="Update" readonly="readonly" data-bs-toggle="modal" data-bs-target="#updateConfirmModal">
+                <% end %>
             </li>
             <li class="nav-item">
-                <%= link_to "Back", @company, class: "btn btn-dark" %>
+                <%= link_to "Back", companies_path, class: "btn btn-dark" %>
             </li>
         </ul>
+        <!-- Modal -->
+        <div class="modal fade" id="updateConfirmModal" tabindex="-1" aria-labelledby="updateConfirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="width: 360px; height: 180px">
+                    <div class="modal-body" style="display: flex; padding: 2.5rem 1rem 0 2rem">
+                        <span style="padding-right: 1rem"><em class="fa-regular fa-circle-question"></em></span>
+                        <div>
+                            <div>Do you want to</div>
+                            <div>update these company?</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="justify-content: space-between; border-top: hidden">
+                        <button type="button" class="btn btn-register" id="btn-update-company">OK</button>
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 <% end %>

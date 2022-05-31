@@ -32,7 +32,7 @@ class CompanyProfile < ApplicationRecord
 
     private
     def time_to_display_must_be_after_or_equal_to_today
-        if display_time.present? && display_time < Date.today
+        if display_time.present? && display_time.to_datetime < Date.today
             errors.add(:display_time, "Time must be after or equal to today")
         end
     end

@@ -3,7 +3,7 @@ $(function() {
     const lengthOfCompanyPhoneNumber = [10, 11];
 
     preventEnter($("#company_company_code"), lengthOfCompanyCode, $("#company_code_error"), "#company_code_error_detail", "<div id='company_code_error_detail'>Company code must have 6 characters!</div>");
-    preventEnter($("#company_phone_number"), lengthOfCompanyPhoneNumber, $("#phone_number_error"), "#phone_number_error_detail", "<div id='phone_number_error_detail'>Phone number must have 10 or 11 characters!</div>");
+    preventEnter($("#company_company_profiles_attributes_0_phone_number"), lengthOfCompanyPhoneNumber, $("#phone_number_error"), "#phone_number_error_detail", "<div id='phone_number_error_detail'>Phone number must have 10 or 11 characters!</div>");
 
     $("#btn-update-company").on('click', function() {
         $("#company-register-frm").submit();
@@ -23,13 +23,13 @@ $(function() {
         $("#btn-update-success").click();
     }
 
-    $("#company_phone_number").bind("paste", function(e) {
+    $("#company_company_profiles_attributes_0_phone_number").bind("paste", function(e) {
         if (!e.originalEvent.clipboardData.getData('text').match(/^\d+$/)) {
             e.preventDefault();
         }
     })
 
-    $("#company_phone_number").bind("keypress", function(e) {
+    $("#company_company_profiles_attributes_0_phone_number").bind("keypress", function(e) {
         if (!e.key.match(/^\d+$/)) {
             e.preventDefault();
         }

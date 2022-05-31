@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_27_033353) do
+ActiveRecord::Schema.define(version: 2022_05_30_061234) do
 
   create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "company_code", null: false
   end
 
   create_table "company_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
-    t.string "company_code", null: false
     t.string "company_name", null: false
     t.string "company_email", null: false
     t.string "phone_number", null: false

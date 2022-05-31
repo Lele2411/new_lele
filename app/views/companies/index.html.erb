@@ -15,35 +15,35 @@
                     <td>
                         <div class="row form-group">
                         <div class="col-sm-4">
-                            <%= f.search_field :company_profiles_company_code_cont, class:"form-control", placeholder: "Company code" %>
+                            <%= f.search_field :company_company_code_cont, class:"form-control", placeholder: "Company code" %>
                         </div>
                         <div class="col-sm-8">
-                            <%= f.search_field :company_profiles_company_name_cont, class:"form-control", placeholder: "Please enter company name" %>
+                            <%= f.search_field :company_name_cont, class:"form-control", placeholder: "Please enter company name" %>
                         </div>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td><%= f.label :company_profiles_company_email_cont, 'Email' %><td>
+                    <td><%= f.label :company_email_cont, 'Email' %><td>
                     <td>
                         <div class="row form-group">
-                            <div class="col-sm-8"><%= f.search_field :company_profiles_company_email_cont, class:"form-control", placeholder: "Please enter company email" %></div>
+                            <div class="col-sm-8"><%= f.search_field :company_email_cont, class:"form-control", placeholder: "Please enter company email" %></div>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td><%= f.label :company_profiles_phone_number_cont, 'Phone Number' %><td>
+                    <td><%= f.label :phone_number_cont, 'Phone Number' %><td>
                     <td>
                         <div class="row form-group">
-                            <div class="col-sm-8"><%= f.search_field :company_profiles_phone_number_cont, class:"form-control", placeholder: "Please enter phone number" %></div>
+                            <div class="col-sm-8"><%= f.search_field :phone_number_cont, class:"form-control", placeholder: "Please enter phone number" %></div>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td><%= f.label :company_profiles_status_eq, 'Status' %><td>
+                    <td><%= f.label :status_eq, 'Status' %><td>
                     <td>
                         <div class="row form-group">
-                            <div class="col-sm-8"><%= f.select :company_profiles_status_eq, [["Working", 2], ["Pending", 1], ["Stopped", 0]], { :include_blank => 'Select status' }, { :class => "form-select", :id => "select-status" } %></div>
+                            <div class="col-sm-8"><%= f.select :status_eq, [["Working", 2], ["Pending", 1], ["Stopped", 0]], { :include_blank => 'Select status' }, { :class => "form-select", :id => "select-status" } %></div>
                         </div>
                     </td>
                 </tr>
@@ -57,7 +57,7 @@
                 </ul>
             </div>
         <% end %>
-        <% if @companies.empty? %>
+        <% if @profiles.empty? %>
             <div><h3 class="empty-data">There are no companies</h3></div>
         <% else %>
             <div class="col-lg-12 col-sm-12">
@@ -74,15 +74,14 @@
                             </tr>
                         </thead>
                     <tbody>
-                        <% @companies.each do |company| %>
-                            <% @profile = company.company_profiles.first %>
+                        <% @profiles.each do |profile| %>
                             <tr>
-                                <td class="col-content"><%= company.company_code %></th>
-                                <td class="col-content"><%= @profile.company_name %></td>
-                                <td class="col-content"><%= @profile.company_email %></td>
-                                <td class="col-content"><%= @profile.phone_number %></td>
-                                <td class="col-content"><span class="btn btn-dark btn-status-<%= @profile.status == 2 ? 'working' : (@profile.status == 1 ? 'pending' : 'stop') %>">
-                                    <%= @profile.status == 2 ? 'Working' : (@profile.status == 1 ? 'Pending' : 'Stopped') %></span>
+                                <td class="col-content"><%= profile.company.company_code %></th>
+                                <td class="col-content"><%= profile.company_name %></td>
+                                <td class="col-content"><%= profile.company_email %></td>
+                                <td class="col-content"><%= profile.phone_number %></td>
+                                <td class="col-content"><span class="btn btn-dark btn-status-<%= profile.status == 2 ? 'working' : (profile.status == 1 ? 'pending' : 'stop') %>">
+                                    <%= profile.status == 2 ? 'Working' : (profile.status == 1 ? 'Pending' : 'Stopped') %></span>
                                 </td>
                                 <td class="col-content">
                                     <%= link_to "Detail", company, class: "btn btn-dark btn-detail" %>
@@ -98,7 +97,7 @@
             <div class="paginator d-flex align-items-center justify-content-between">
                 <%= form_with url: select_pagination_path, id: "select-pagination", class: "d-flex align-items-center", method: :post do |f| %>
                     <%= f.label :option_row_of_per_page, 'Row per page', class: "font-weight-bold font-size-12" %>
-                    <%= f.select :option_row_of_per_page, [[5, 5], [10, 10], [20, 20]], { :selected => @per_page }, { :class => "form-select" } %>
+                    <%= f.select :option_row_of_per_page, [[20, 20], [50, 50], [100, 100]], { :selected => @per_page }, { :class => "form-select" } %>
                     <%= f.hidden_field :company_code_param, value: @params ? @params[:company_code_cont] : '' %>
                     <%= f.hidden_field :company_name_param, value: @params ? @params[:company_name_cont] : '' %>
                     <%= f.hidden_field :company_email_param, value: @params ? @params[:company_email_cont] : '' %>
@@ -106,11 +105,11 @@
                     <%= f.hidden_field :status_param, value: @params ? @params[:status_eq] : '' %>
                 <% end %>
                 <div class="total-page d-flex align-items-center justify-content-between">
-                    <% total = @companies.count %>
+                    <% total = @profiles.count %>
                     <% first_number = (@current_page - 1) * @per_page + 1 %>
                     <% final_number = @current_page <= total/@per_page ? @current_page * @per_page : total %>
                     <span class="mr-3 font-weight-bold font-size-12"><%= first_number %>-<%= final_number %> of <%= total %></span>
-                    <%= will_paginate @companies, :previous_label => 'Previous', :next_label => 'Next'%>
+                    <%= will_paginate @profiles, :previous_label => 'Previous', :next_label => 'Next'%>
                 </div>
             </div>
 

@@ -6,23 +6,21 @@
 <% website_url_error = nil %>
 <% logo_error = nil %>
 
-<% create_company_page = request.path === new_company_path || request.path === companies_path %>
-
 <% if @company.errors.any? %>
     <% @company.errors.messages.each do |attribute, message| %>
         <% if attribute == :company_code %>
             <% company_code_error = message[0] %>
-        <% elsif attribute == :company_name %>
+        <% elsif attribute == :"company_profiles.company_name" %>
             <% company_name_error = message[0] %>
-        <% elsif attribute == :address %>
+        <% elsif attribute == :"company_profiles.address" %>
             <% address_error = message[0] %>
-        <% elsif attribute == :company_email %>
+        <% elsif attribute == :"company_profiles.company_email" %>
             <% company_email_error = message[0] %>
         <% elsif attribute == :phone_number %>
             <% phone_number_error = message[0] %>
-        <% elsif attribute == :website_url %>
+        <% elsif attribute == :"company_profiles.website_url" %>
             <% website_url_error = message[0] %>
-        <% elsif attribute == :logo %>
+        <% elsif attribute == :"company_profiles.logo" %>
             <% logo_error = message[-1] %>
         <% end %>
     <% end %>  
@@ -32,30 +30,15 @@
         <table id="table-company-frm" class="table col-lg-6 col-sm-6 font-weight-bold" style="width: 700px;">
             <tr>
                 <td width="30%">
-                <% if create_company_page %>
                     <%= f.label :company_code do %>
                         Company Code<span class="text-danger"> *</span>
                     <% end %>
-                <% else %>
-                    <%= f.label :company_code do %>
-                        Company<span class="text-danger"> *</span>
-                    <% end %>
-                <% end %>
                 </td>
                 <td width="80%">
                     <div class="row form-group">
                         <div class="col-sm-4">
-                            <% if create_company_page %>
-                                <%= f.text_field :company_code, class: "form-control", placeholder:"Company code" %>
-                            <% else %>
-                                <%= f.text_field :company_code, class: "form-control disable-input", readonly: "readonly" %>
-                            <% end %>
+                            <%= f.text_field :company_code, class: "form-control", placeholder:"Company code" %>
                         </div>
-                        <% unless create_company_page %>
-                            <div class="col-sm-4">
-                                <%= f.text_field :company_name, class: "form-control disable-input", placeholder:"Please enter Company name", readonly: "readonly" %>
-                            </div>
-                        <% end %>
                     </div>
                 </td>
             </tr>
@@ -68,31 +51,30 @@
                 </td>
             </tr>
 
-<%= f.fields_for :company_profiles do |profile| %>
-            <% if create_company_page %>
-                <tr>
-                    <td>
-                        <%= profile.label :company_name do %>
-                            Company Name<span class="text-danger"> *</span>
-                        <% end %>
-                    </td>
-                    <td>
-                        <div class="row form-group">
-                            <div class="col-sm-8">
-                                <%= profile.text_field :company_name, class: "form-control", placeholder:"Please enter Company name" %>
-                            </div>
+            <%= f.fields_for :company_profiles do |profile| %>
+                <%= profile.hidden_field :display_time, value: Time.now.strftime("%Y/%m/%d") %>
+            <tr>
+                <td>
+                    <%= profile.label :company_name do %>
+                        Company Name<span class="text-danger"> *</span>
+                    <% end %>
+                </td>
+                <td>
+                    <div class="row form-group">
+                        <div class="col-sm-8">
+                            <%= profile.text_field :company_name, class: "form-control", placeholder:"Please enter Company name" %>
                         </div>
-                    </td>
-                </tr>
-                <tr class="error-text" height="20px">
-                    <td></td>
-                    <td class="register-company-error">
-                        <% if company_name_error %>
-                            <%= company_name_error %>
-                        <% end %>
-                    </td>
-                </tr>
-            <% end %>
+                    </div>
+                </td>
+            </tr>
+            <tr class="error-text" height="20px">
+                <td></td>
+                <td class="register-company-error">
+                    <% if company_name_error %>
+                        <%= company_name_error %>
+                    <% end %>
+                </td>
+            </tr>
             <tr>
                 <td>
                     <%= profile.label :address do %>
@@ -179,22 +161,6 @@
                     <% end %>
                 </td>
             </tr>
-            <% unless create_company_page %>
-                <tr>
-                    <td>Status</td>
-                    <td>
-                        <div class="row form-group" style="padding-left: 12px">
-                            <% if @company.status == 2 %>
-                                <div class="col-sm-8 working-color">WORKING</div>
-                            <% elsif @company.status == 1 %>
-                                <div class="col-sm-8 pending-color">PENDING</div>
-                            <% else %>
-                                <div class="col-sm-8 stopped-color">STOPPED</div>
-                            <% end %>
-                        </div>
-                    </td>
-                </tr>
-            <% end %>
         </table>
         <table class="col-lg-6 col-sm-6 upload-logo font-weight-bold">
             <tr height="114px">
@@ -204,7 +170,7 @@
                             Logo<span class="text-danger"> *</span>
                         <% end %>
                     </div>
-                    <% logo = @company.logo.blank? ? 'logo' : @company.logo.url %>
+                    <% logo = profile.object.logo.blank? ? 'logo' : profile.object.logo.url %>
                     <%= image_tag(logo, alt: "preview image", class: "d-block logo-img", id: "preview-image") %>
                     <div class="btn btn-upload">
                         <%= profile.label :logo do %>
@@ -219,70 +185,18 @@
                     <% end %>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <input type="hidden" class="d-block" id="logo_image" name="upload" value="">
-                    <label id="error_image" generate="true" class="d-block error"></label>
-                </td>
-            </tr>
         </table>
-<% end %>
+            <% end %>
     </div>
 
-    <div class="col-lg-12 col-sm-12 d-flex justify-content-<%= create_company_page ? 'end' : 'between' %> align-items-center my-4">
-        <% unless create_company_page %>
-            <%= render 'update_status_form', company: @company %>
-        <% end %>
+    <div class="col-lg-12 col-sm-12 d-flex justify-content-end align-items-center my-4">
         <ul class="nav group-btn">
             <li class="nav-item">
-                <% if create_company_page %>
-                    <%= f.submit "Register", class: "btn btn-register" %>
-                <% else %>
-                    <input class="btn btn-primary" value="Update" readonly="readonly" data-bs-toggle="modal" data-bs-target="#updateConfirmModal">
-                <% end %>
+                <%= f.submit "Register", class: "btn btn-register" %>
             </li>
             <li class="nav-item">
                 <%= link_to "Back", companies_path, class: "btn btn-dark" %>
             </li>
         </ul>
-        <!-- Modal -->
-        <div class="modal fade" id="updateConfirmModal" tabindex="-1" aria-labelledby="updateConfirmModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content" style="width: 360px; height: 180px">
-                    <div class="modal-body" style="display: flex; padding: 2.5rem 1rem 0 2rem">
-                        <span style="padding-right: 1rem"><em class="fa-regular fa-circle-question"></em></span>
-                        <div>
-                            <div>Do you want to</div>
-                            <div>update these company?</div>
-                        </div>
-                    </div>
-                    <div class="modal-footer" style="justify-content: space-between; border-top: hidden">
-                        <button type="button" class="btn btn-register" id="btn-update-company">OK</button>
-                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 <% end %>
-
-<%= form_for @company, html: { id: "form-update-status" } do |f| %>
-    <%= f.hidden_field :status, value: @company.status, id: "company_status" %>
-<% end %>
-
-<button hidden data-bs-toggle="modal" data-bs-target="#updateSuccessModal" id="btn-update-success"></button>
-<input type="hidden" value=<%= flash[:update_success] || false %> id="check-status-update">
-<!-- Modal -->
-<div class="modal fade" id="updateSuccessModal" tabindex="-1" aria-labelledby="updateSuccessModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="width: 360px; height: 180px">
-            <div class="modal-body" style="display: flex; padding: 2.5rem 1rem 0 2rem">
-                <em class='fas fa-check-circle' style='color: green; padding-right: 25px'></em>
-                <span>Update Company Successfully!!!</span>
-            </div>
-            <div class="modal-footer" style="justify-content: center; border-top: hidden; padding-bottom: 2rem">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
